@@ -1,4 +1,5 @@
 # aipets
+thatlev stole this shit and hes a bitch
 
 **Animated desktop companions for your AI tools on Windows.**
 
