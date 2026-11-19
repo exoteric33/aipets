@@ -3,6 +3,8 @@ thatlev stole this shit and hes a bitch
 
 **Animated desktop companions for your AI tools on Windows.**
 
+**Very efficient, completely written in Rust:** one tiny process runs the tray and every pet, using about 1.8 MB of memory with all pets hidden and 16.3 MB with all seven visible ([details](#memory-use)).
+
 Keep your favorite AI tools just above your taskbar as little characters. Click a pet to open its website, desktop app or terminal. Supported agents also show when they are **working**, **need your input** or **have finished**.
 
 ![The seven aipets characters: Claude, Hermes, ChatGPT, Gemini, Grok, Cursor and Copilot](docs/images/pets.png)
