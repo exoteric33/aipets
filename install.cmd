@@ -1,10 +1,10 @@
 @echo off
-rem Install aipets (double-click): builds aipets.exe with the C# compiler that ships with Windows, turns on
+rem Install aipets (double-click): builds aipets.exe with Rust (cargo, https://rustup.rs), turns on
 rem "Start with Windows", adds the status hooks for Claude Code, Codex, Hermes and Cursor
 rem (only for installed agents), approves them and starts aipets.
 setlocal
 cd /d "%~dp0"
-if exist "%~dp0src\Program.cs" (
+if exist "%~dp0Cargo.toml" (
   echo Building aipets ...
   powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0build.ps1"
   if errorlevel 1 (

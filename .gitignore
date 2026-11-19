@@ -1,5 +1,6 @@
 # build output (rebuild with .\build.ps1)
 aipets.exe
+target/
 *.tmp
 dist/
 AGENTS.md

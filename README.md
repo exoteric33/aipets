@@ -35,10 +35,10 @@ Real desktop screenshots with Claude and ChatGPT:
 
 ## Get started
 
-**You need:** Windows 10/11 with .NET Framework 4.8. Windows Terminal is optional. Install the AI tools you want to launch separately; aipets does not include them.
+**You need:** Windows 10/11 and, to build from source, [Rust](https://rustup.rs) (install it with the default settings). Windows Terminal is optional. Install the AI tools you want to launch separately; aipets does not include them.
 
 1. [Download the latest source ZIP](https://github.com/exoteric33/aipets/archive/refs/heads/main.zip) and extract it into a folder you intend to keep. You can also clone this repository.
-2. Double-click **`install.cmd`**. It builds the app, enables **Start with Windows**, adds status hooks for detected agents and starts the pets. No Python or separate .NET SDK is needed.
+2. Double-click **`install.cmd`**. It builds the app, enables **Start with Windows**, adds status hooks for detected agents and starts the pets. Rust is the only build requirement; no Python or .NET is needed.
 3. Click the **aipets tray icon** (check the hidden icons behind **^**) to choose which pets to show, their size and what a click opens.
 4. Restart any running agents so they load the new hooks. If setup reports that Codex hooks need approval, follow its `/hooks` instructions.
 
@@ -64,7 +64,7 @@ Status depends on the agent's hooks, independently of the chosen click action. O
 
 ## How it works
 
-aipets runs locally as a Windows tray app, with one process per visible pet. Agent hooks write small status files that update the bubbles. ChatGPT also reads local Codex transcripts to detect questions. Settings, logs and status files live in `%APPDATA%\aipets`; your AI tools handle the conversations.
+aipets is a small native Windows tray app written in Rust. The tray, the settings window and every pet share a single process, so it stays light: about **2 MB** of memory with all pets hidden and about **16 MB** with all seven visible. The earlier C# version needed about 28 MB for the tray alone, plus a separate .NET process for every visible pet. Agent hooks write small status files that update the bubbles. ChatGPT also reads local Codex transcripts to detect questions. Settings, logs and status files live in `%APPDATA%\aipets`; your AI tools handle the conversations.
 
 ## Everyday controls
 
@@ -95,7 +95,7 @@ Missing a status bubble? Check **Settings → Status display → Set up hooks**,
 .\build.ps1
 ```
 
-Builds with the C# compiler included with Windows and restarts a running aipets installation after a successful build. Keep `aipets.exe` beside the `pets\` folder. See [build options](docs/setup.md#build-options) for an isolated build.
+Builds with Rust (`cargo build --release`) and restarts a running aipets installation after a successful build. Keep `aipets.exe` beside the `pets\` folder. See [build options](docs/setup.md#build-options) for an isolated build.
 
 ## License
 

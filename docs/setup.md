@@ -4,7 +4,7 @@
 
 ## Install
 
-Use Windows 10/11 with .NET Framework 4.8. Windows Terminal is optional; aipets falls back to the Windows console. The AI programs and desktop apps must be installed separately.
+Use Windows 10/11. Building from source needs [Rust](https://rustup.rs): run its installer with the default settings, which also offers the Visual Studio C++ build tools Rust uses on Windows. Windows Terminal is optional; aipets falls back to the Windows console. The AI programs and desktop apps must be installed separately.
 
 1. Download the [current source ZIP](https://github.com/exoteric33/aipets/archive/refs/heads/main.zip), or clone the repository:
 
@@ -14,7 +14,7 @@ Use Windows 10/11 with .NET Framework 4.8. Windows Terminal is optional; aipets 
    ```
 
 2. Put the extracted or cloned folder where you want to keep it. Startup and hooks store the path to `aipets.exe`.
-3. Double-click `install.cmd`. In a source checkout, it compiles the executable with Windows' .NET Framework C# compiler. A binary package containing no source skips compilation.
+3. Double-click `install.cmd`. In a source checkout, it compiles the executable with Rust (`cargo`); the first build downloads a few small libraries and takes about a minute. A binary package containing no source skips compilation.
 4. Review the setup summary, then restart running agents to load the hooks.
 
 The installer turns on **Start with Windows**, adds hooks for detected Claude Code, Codex, Hermes Agent and Cursor installations, sets up hook approvals where possible, and starts aipets. Automatic Codex approval requires the Codex CLI; otherwise the summary explains how to trust the aipets hooks through `/hooks`.
@@ -118,13 +118,15 @@ The Claude desktop app and Hermes Desktop status hooks, and multi-monitor behavi
 
 ## Build options
 
-The public repository includes the sprites and app icon, so building needs neither Python nor a separate .NET SDK.
+The public repository includes the sprites and app icon, so building needs only Rust: no Python and no .NET.
 
 ```powershell
 .\build.ps1
 .\build.ps1 -OutputDirectory C:\Temp\aipets-build
 ```
 
-The first command rebuilds the app and restarts it if it was running from that folder. The second builds in isolation and leaves the running installation untouched. An isolated build outputs only the executable; copy `pets\` beside it before running it. The version number is defined in `src/AssemblyInfo.cs`.
+The first command rebuilds the app and restarts it if it was running from that folder. The second builds in isolation and leaves the running installation untouched. An isolated build outputs only the executable; copy `pets\` beside it before running it. Compiler output is cached in `target\`, so later builds are quick. The version number is defined in `Cargo.toml`.
+
+`cargo test --release` runs the unit tests (settings file, sprites, layers, hook setup on scratch files and more); none of them touch your real settings or agent configurations.
 
 `aipets.exe --install` and `aipets.exe --uninstall` perform the setup actions used by the two `.cmd` files; add `--quiet` to suppress the summary window. Manual configuration examples are in [Status hooks](hooks.md).
