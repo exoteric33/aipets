@@ -344,6 +344,9 @@ pub fn log(message: &str) {
 /// A line under another tag: each pet writes under her id, as when every pet was its own process.
 pub fn log_as(tag: &str, message: &str) {
     use std::io::Write;
+    if cfg!(test) {
+        return; // unit tests never write into the real log
+    }
     let path = log_path();
     let _ = std::fs::create_dir_all(data_dir());
     if std::fs::metadata(&path).map(|m| m.len() > 512 * 1024).unwrap_or(false) {
