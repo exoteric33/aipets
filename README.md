@@ -64,7 +64,19 @@ Status depends on the agent's hooks, independently of the chosen click action. O
 
 ## How it works
 
-aipets is a small native Windows tray app written in Rust. The tray, the settings window and every pet share a single process, so it stays light: about **2 MB** of memory with all pets hidden and about **16 MB** with all seven visible. The earlier C# version needed about 28 MB for the tray alone, plus a separate .NET process for every visible pet. Agent hooks write small status files that update the bubbles. ChatGPT also reads local Codex transcripts to detect questions. Settings, logs and status files live in `%APPDATA%\aipets`; your AI tools handle the conversations.
+aipets is a small native Windows tray app written in Rust. The tray, the settings window and every pet share a single process, so it stays light (see [memory use](#memory-use)). Agent hooks write small status files that update the bubbles. ChatGPT also reads local Codex transcripts to detect questions. Settings, logs and status files live in `%APPDATA%\aipets`; your AI tools handle the conversations.
+
+### Memory use
+
+aipets was rewritten from C# (.NET) in Rust to use less memory. Measured on Windows 11 with all pets at the default height:
+
+| Situation | C# version (up to 0.1) | Rust version (0.2) |
+| --- | --- | --- |
+| Tray only, all pets hidden | 27.9 MB | **1.8 MB** |
+| All seven pets visible | 27.9 MB for the tray, plus one extra .NET process per pet | **16.3 MB** in total |
+| Processes | 1 tray + 1 per visible pet | always 1 |
+
+The figures are private memory as Windows reports it per process. Task Manager's **Memory** column counts a little differently, so its numbers can vary slightly.
 
 ## Everyday controls
 
